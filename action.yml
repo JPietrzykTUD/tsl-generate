@@ -1,0 +1,29 @@
+# action.yml
+name: 'TSL Generate'
+description: 'Generate the Template SIMD Library for a specific architecture.'
+inputs:
+  targets:
+    description: "Comma separated list of targets to generate, e.g., 'sse,sse2,sse4_1'."
+    required: true
+    type: string
+  generate-to:
+    description: "Path to the directory where the generated files will be placed."
+    required: true
+    type: string
+  logs-to:
+    description: "Path to the directory where the logs will be placed."
+    required: true
+    type: string
+    default: "generation_log"
+outputs:
+  msg:
+    description: 'Verbose message from the action.'
+  success:
+    description: 'Whether the action was successful (1, 0 otherwise).'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.targets }}
+    - ${{ inputs.generate-to }}
+    - ${{ inputs.logs-to }}
